@@ -72,9 +72,9 @@ const Footer: React.FC = () => {
         <section className="copyright">
           <Link to="/">{config.title}</Link> &copy; {new Date().getFullYear()}{' '}
           {config.footer && (
-            <Link to="/">
-              | {config.title} {config.footer}
-            </Link>
+            <a href="https://www.gatsbyjs.org/">
+              | {config.footer}
+            </a>
           )}
         </section>
         <SiteFooterNav>
@@ -89,12 +89,6 @@ const Footer: React.FC = () => {
               Twitter
             </a>
           )}
-
-          <a href="https://ghost.org" target="_blank" rel="noopener noreferrer">
-            Ghost
-          </a>
-
-          <a href="/rss.xml">RSS</a>
         </SiteFooterNav>
       </div>
     </footer>

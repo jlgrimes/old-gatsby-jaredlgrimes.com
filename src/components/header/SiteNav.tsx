@@ -8,8 +8,9 @@ import { SocialLink } from '../../styles/shared';
 import config from '../../website-config';
 import Facebook from '../icons/facebook';
 import Twitter from '../icons/twitter';
-import SubscribeModal from '../subscribe/SubscribeOverlay';
+import LinkedIn from '../icons/linkedin'
 import SiteNavLogo from './SiteNavLogo';
+import Github from '../icons/github';
 
 const HomeNavRaise = css`
   @media (min-width: 900px) {
@@ -27,6 +28,16 @@ const SiteNavStyles = css`
   overflow-y: hidden;
   height: 40px;
   font-size: 1.2rem;
+`;
+
+const SiteNavCenter = styled.div`
+  margin: auto;
+  width: 50%;
+  flex-shrink: 0;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  height: 40px;
 `;
 
 const SiteNavLeft = styled.div`
@@ -87,12 +98,10 @@ const SiteNavRight = styled.div`
 `;
 
 const SocialLinks = styled.div`
+  margin: auto;
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  a:last-of-type {
-    padding-right: 20px;
-  }
 `;
 
 const SubscribeButton = styled.a`
@@ -117,34 +126,11 @@ interface SiteNavProps {
 }
 
 class SiteNav extends React.Component<SiteNavProps> {
-  subscribe = React.createRef<SubscribeModal>();
-
-  openModal = () => {
-    if (this.subscribe.current) {
-      this.subscribe.current.open();
-    }
-  };
-
   render() {
     const { isHome = false } = this.props;
     return (
       <nav css={[isHome && HomeNavRaise, SiteNavStyles]}>
-        <SiteNavLeft>
-          {!isHome && <SiteNavLogo />}
-          <ul css={NavStyles} role="menu">
-            {/* TODO: mark current nav item - add class nav-current */}
-            <li role="menuitem">
-              <Link to="/">Home</Link>
-            </li>
-            <li role="menuitem">
-              <Link to="/about">About</Link>
-            </li>
-            <li role="menuitem">
-              <Link to="/tags/getting-started/">Getting Started</Link>
-            </li>
-          </ul>
-        </SiteNavLeft>
-        <SiteNavRight>
+        <SiteNavCenter>
           <SocialLinks>
             {config.facebook && (
               <a
@@ -168,12 +154,30 @@ class SiteNav extends React.Component<SiteNavProps> {
                 <Twitter />
               </a>
             )}
+            {config.linkedin && (
+              <a
+                css={SocialLink}
+                href={config.linkedin}
+                title="LinkedIn"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <LinkedIn />
+              </a>
+            )}
+            {config.github && (
+              <a
+                css={SocialLink}
+                href={config.github}
+                title="GitHub"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Github />
+              </a>
+            )}
           </SocialLinks>
-          {config.showSubscribe && (
-            <SubscribeButton onClick={this.openModal}>Subscribe</SubscribeButton>
-          )}
-          {config.showSubscribe && <SubscribeModal ref={this.subscribe} />}
-        </SiteNavRight>
+        </SiteNavCenter>
       </nav>
     );
   }

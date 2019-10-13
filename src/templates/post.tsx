@@ -9,13 +9,12 @@ import { Helmet } from 'react-helmet';
 
 import AuthorCard from '../components/AuthorCard';
 import Footer from '../components/Footer';
-import SiteNav from '../components/header/SiteNav';
+import SiteNavLogo from '../components/header/SiteNavLogo';
 import PostCard from '../components/PostCard';
 import PostContent from '../components/PostContent';
 import PostFullFooter from '../components/PostFullFooter';
 import PostFullFooterRight from '../components/PostFullFooterRight';
 import ReadNextCard from '../components/ReadNextCard';
-import Subscribe from '../components/subscribe/Subscribe';
 import Wrapper from '../components/Wrapper';
 import IndexLayout from '../layouts';
 import { colors } from '../styles/colors';
@@ -261,7 +260,7 @@ const PageTemplate: React.FC<PageTemplateProps> = props => {
       <Wrapper css={PostTemplate}>
         <header css={[outer, SiteHeader]}>
           <div css={inner}>
-            <SiteNav />
+            <SiteNavLogo />
           </div>
         </header>
         <main id="site-main" className="site-main" css={[SiteMain, outer]}>
@@ -286,7 +285,7 @@ const PageTemplate: React.FC<PageTemplateProps> = props => {
                 <PostFullTitle>{post.frontmatter.title}</PostFullTitle>
               </PostFullHeader>
 
-              {(post.frontmatter.image && post.frontmatter.image.childImageSharp) && (
+              {(false && post.frontmatter.image && post.frontmatter.image.childImageSharp) && (
                 <PostFullImage>
                   <Img
                     style={{ height: '100%' }}
@@ -295,9 +294,6 @@ const PageTemplate: React.FC<PageTemplateProps> = props => {
                 </PostFullImage>
               )}
               <PostContent htmlAst={post.htmlAst} />
-
-              {/* The big email subscribe modal content */}
-              {config.showSubscribe && <Subscribe title={config.title} />}
 
               <PostFullFooter>
                 <AuthorCard author={post.frontmatter.author} />

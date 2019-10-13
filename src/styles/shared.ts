@@ -24,8 +24,9 @@ export const SiteTitle = styled.h1`
   z-index: 10;
   margin: 0;
   padding: 0;
-  font-size: 3.8rem;
+  font-size: 6rem;
   font-weight: 700;
+  display: inline-block
 `;
 
 export const SiteDescription = styled.h2`
@@ -36,6 +37,7 @@ export const SiteDescription = styled.h2`
   font-weight: 300;
   letter-spacing: 0.5px;
   opacity: 0.8;
+  display: inline-block
 `;
 
 export const PostFeed = css`

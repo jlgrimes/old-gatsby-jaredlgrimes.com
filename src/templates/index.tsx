@@ -11,6 +11,9 @@ import IndexLayout from '../layouts';
 import config from '../website-config';
 import Pagination from '../components/Pagination';
 
+import Typist from 'react-typist';
+import '../styles/Typist.css';
+
 import {
   inner,
   outer,
@@ -90,10 +93,14 @@ export interface IndexProps {
   };
 }
 
+const projects = [
+  "Swissiwashi",
+  "Pokeflow"
+]
+
 const IndexPage: React.FC<IndexProps> = props => {
   const width = props.data.header.childImageSharp.fluid.sizes.split(', ')[1].split('px')[0];
   const height = String(Number(width) / props.data.header.childImageSharp.fluid.aspectRatio);
-
   return (
     <IndexLayout css={HomePosts}>
       <Helmet>
@@ -136,26 +143,21 @@ const IndexPage: React.FC<IndexProps> = props => {
           }}
         >
           <div css={inner}>
-            <SiteHeaderContent>
-              <SiteTitle>
-                {props.data.logo ? (
-                  <img
-                    style={{ maxHeight: '45px' }}
-                    src={props.data.logo.childImageSharp.fixed.src}
-                    alt={config.title}
-                  />
-                ) : (
-                  config.title
-                )}
-              </SiteTitle>
-              <SiteDescription>{config.description}</SiteDescription>
+            <SiteHeaderContent style={{height: "20em"}}>
+                <Typist className="code">
+                  <SiteTitle>{"Hi, I'm Jared."}</SiteTitle>
+                <Typist.Delay ms={500} />
+                  <br />
+                  <SiteDescription>{config.description}</SiteDescription>
+                </Typist>
             </SiteHeaderContent>
             <SiteNav isHome />
           </div>
         </header>
         <main id="site-main" css={[SiteMain, outer]}>
+          {projects.map(project => <p>{project}</p>)}
           <div css={inner}>
-            <div css={[PostFeed, PostFeedRaise]}>
+            <div css={[PostFeed]}>
               {props.data.allMarkdownRemark.edges.map(post => {
                 // filter out drafts in production
                 return (

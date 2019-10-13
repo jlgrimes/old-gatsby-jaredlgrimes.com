@@ -4,7 +4,6 @@ import styled from '@emotion/styled';
 import * as _ from 'lodash';
 
 import { colors } from '../styles/colors';
-import InfinityIcon from './icons/infinity';
 import config from '../website-config';
 
 export interface ReadNextCardStylesProps {
@@ -197,7 +196,7 @@ const ReadNextCard: React.FC<ReadNextProps> = props => {
             </ReadNextCardHeaderTitle>
           </ReadNextCardHeader>
           <ReadNextDivider>
-            <InfinityIcon />
+            <p>infinity</p>
           </ReadNextDivider>
           <ReadNextCardContent>
             <ul>

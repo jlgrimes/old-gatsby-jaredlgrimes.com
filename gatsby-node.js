@@ -165,14 +165,16 @@ exports.createPages = async ({ graphql, actions }) => {
     ),
   );
   tags.forEach(tag => {
+    const tagPath = `/tags/${_.kebabCase(tag)}/`
+
     createPage({
-      path: `/tags/${_.kebabCase(tag)}/`,
-      component: tagTemplate,
+      path: tagPath,
+      component: path.resolve(`src/templates/tags.tsx`),
       context: {
-        tag,
+        tag:tag
       },
-    });
-  });
+    })
+  })
 
   // Create author pages
   const authorTemplate = path.resolve('./src/templates/author.tsx');
