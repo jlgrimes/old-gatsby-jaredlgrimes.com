@@ -52,7 +52,7 @@ export interface WebsiteConfig {
 
 const config: WebsiteConfig = {
   title: 'Jared Grimes',
-  description: 'Full-stack developer',
+  description: 'I\'m a full-stack developer.',
   coverImage: 'img/blog-cover.jpg',
   lang: 'en',
   siteUrl: 'https://gatsby-casper.netlify.com',

@@ -73,6 +73,7 @@ exports.createPages = async ({ graphql, actions }) => {
                   }
                 }
               }
+              url
               author {
                 id
                 bio

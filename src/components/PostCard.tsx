@@ -29,6 +29,24 @@ const PostCardStyles = css`
   }
 `;
 
+
+const ProjectCardStyles = css`
+  display: flex;
+  flex-direction: column;
+  background: #fff center center;
+  background-size: cover;
+  box-shadow: rgba(39, 44, 49, 0.06) 8px 14px 38px, rgba(39, 44, 49, 0.03) 1px 3px 8px;
+  transition: all 0.5s ease;
+
+  :hover {
+    transition: all 0.4s ease;
+    transform: translate3D(0, -1px, 0) scale(0.98);
+    .overlay {
+      opacity: 0.75;
+    }
+  }
+`;
+
 const PostCardImageLink = css`
   position: relative;
   display: block;
@@ -38,7 +56,8 @@ const PostCardImageLink = css`
 
 const PostCardImage = styled.div`
   width: auto;
-  height: 200px;
+  min-width: 400px;
+  height: 300px;
   background: ${colors.lightgrey} no-repeat center center;
   background-size: cover;
 `;
@@ -78,7 +97,6 @@ const PostCardTitle = styled.h2`
 `;
 
 const PostCardExcerpt = styled.section`
-  font-family: Georgia, serif;
 `;
 
 const PostCardMeta = styled.footer`
@@ -144,24 +162,29 @@ const PostCardPost: React.FC<PostCardProps> = ({ post }) => {
 const PostCardProject: React.FC<PostCardProps> = ({ post }) => {
   return (
     <article
-      className={`post-card ${post.frontmatter.image ? '' : 'no-image'}`}
-      css={PostCardStyles}
+      className={`project-card ${post.frontmatter.image ? '' : 'no-image'}`}
+      css={ProjectCardStyles}
     >
-      {post.frontmatter.image && (
-        <Link className="post-card-image-link" css={PostCardImageLink} to={post.fields.slug}>
-          <PostCardImage className="post-card-image">
-            {post.frontmatter.image &&
-              post.frontmatter.image.childImageSharp &&
-              post.frontmatter.image.childImageSharp.fluid && (
-              <Img
-                alt={`${post.frontmatter.title} cover image`}
-                style={{ height: '100%' }}
-                fluid={post.frontmatter.image.childImageSharp.fluid}
-              />
-            )}
-          </PostCardImage>
-        </Link>
-      )}
+        <PostCardImage className="post-card-image">
+          {post.frontmatter.image &&
+            post.frontmatter.image.childImageSharp &&
+            post.frontmatter.image.childImageSharp.fluid && (
+            <Img
+              alt={`${post.frontmatter.title} cover image`}
+              style={{ height: '100%' }}
+              fluid={post.frontmatter.image.childImageSharp.fluid}
+            />
+          )}
+        </PostCardImage>
+        <a className="overlay" target="_blank" href={post.frontmatter.url}>
+          <div className="overlay-text">
+            <PostCardTitle>{post.frontmatter.title}</PostCardTitle>
+            <PostCardExcerpt>{post.excerpt}</PostCardExcerpt>
+            <br />
+            {post.frontmatter.tags && <PostCardTags>{post.frontmatter.tags[0]}</PostCardTags>}
+          </div>
+        </a>
+      {/*
       <PostCardContent className="post-card-content">
         <Link className="post-card-content-link" css={PostCardContentLink} to={post.fields.slug}>
           <header className="post-card-header">
@@ -173,6 +196,7 @@ const PostCardProject: React.FC<PostCardProps> = ({ post }) => {
           </PostCardExcerpt>
         </Link>
       </PostCardContent>
+      */}
     </article> 
   );
 }

@@ -31,7 +31,13 @@ import {
 import { PageContext } from './post';
 
 const HomePosts = css`
+.project-card {
+  position: relative;
+  flex: 1 1 auto;
+}
+
   @media (min-width: 795px) {
+
     .post-card:nth-of-type(6n + 1):not(.no-image) {
       flex: 1 1 100%;
       flex-direction: row;
@@ -155,6 +161,7 @@ const IndexPage: React.FC<IndexProps> = props => {
         </header>
         <main id="site-main" css={[SiteMain, outer]}>
           <div css={inner}>
+
           <div css={[PostFeed]}>
               {props.data.allMarkdownRemark.edges.map(post => {
                 // filter out drafts in production
@@ -233,6 +240,7 @@ export const pageQuery = graphql`
                 }
               }
             }
+            url
             author {
               id
               bio

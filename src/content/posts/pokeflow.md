@@ -32,7 +32,7 @@ So pretty much, the idea of the framework is to make these ideas and many more p
 
 The first and most obvious problem when trying to create this framework is getting the data in the first place. Well, the lovely folks at RK9 have let us see this data for ourselves (for the tournaments that they run, at least)! Well, sort of. What we have from RK9 is first off, a list of decklists from day 2 players. This by itself is incredibly useful, as we're able to see what archetype each person played. We also have a progressive chart of who played who day 2 and their results. Below is a glimpse of what you see from the Daytona Regional Championships:
 
-![daytona_rk9](img/pokeflow/daytona_rk9.png)
+![daytona_rk9](../img/pokeflow/daytona_rk9.png)
 
 As you can see, it's quite easy to go through yourself and view this information, which makes it extremely easy for a computer program to do so as well! All my python script needs to do is look at the page, pull the data, and spit it out into json files. From here we can get into all the data manipulation methods I was referring to before. Pretty cool, right? 
 
@@ -40,7 +40,7 @@ As you can see, it's quite easy to go through yourself and view this information
 
 The most prominent example of this framework being put into action is actually live on PokeStats! My involvement on the PokeStats team has been great, as I've been able to work with amazing people such as Tate Whitesell, Rukan Shao and the rest of the gang. With them, I've been able to organize my data into a few cool-lookin' graphs as shown:
 
-![pokestats](img/pokeflow/pokestats.png)
+![pokestats](../img/pokeflow/pokestats.png)
 
 The above graph is, as you'd expect, another generic pie chart that every competitive team on planet earth generates (thanks <a href="https://twitter.com/daxptcg/status/1116174306973757440">Danny</a>). However, the implementation of the framework comes with the interactive graphs immediately below. Every section of the pie chart you click on opens a new area chart, one that displays a deck's individual matchups against the rest of the decks it played against. This is extremely useful, as we're now able to see how a particular deck faced off against others, instead of theorymoning stuff like, oh this deck went 65/35 against this deck, with having bare to none hard evidence to back it up. All of this generation is done thanks to PokeFlow, as it literally just pulls the raw data from the json files generated.
 
