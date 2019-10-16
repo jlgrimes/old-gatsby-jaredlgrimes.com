@@ -88,16 +88,6 @@ export interface IndexProps {
         fluid: any;
       };
     };
-    pokeflow: {
-      childImageSharp: {
-        fluid: any;
-      };
-    };
-    swissiwashi: {
-      childImageSharp: {
-        fluid: any;
-      };
-    };
     allMarkdownRemark: {
       edges: Array<{
         node: PageContext;
@@ -109,21 +99,6 @@ export interface IndexProps {
 const IndexPage: React.FC<IndexProps> = props => {
   const width = props.data.header.childImageSharp.fluid.sizes.split(', ')[1].split('px')[0];
   const height = String(Number(width) / props.data.header.childImageSharp.fluid.aspectRatio);
-
-  const projects = [
-    {
-      "name": "Pokeflow",
-      "description": "uh",
-      "languages": "React, idk",
-      "image": props.data.pokeflow.childImageSharp.fluid
-    },
-    {
-      "name": "Swissiwashi",
-      "description": "uh",
-      "languages": "React, idk",
-      "image": props.data.swissiwashi.childImageSharp.fluid
-    }
-  ]
 
   return (
     <IndexLayout css={HomePosts}>
@@ -179,21 +154,31 @@ const IndexPage: React.FC<IndexProps> = props => {
           </div>
         </header>
         <main id="site-main" css={[SiteMain, outer]}>
-          {projects.map(project => 
-            <PostCard post={project} />
-          )}
           <div css={inner}>
-            <div css={[PostFeed]}>
+          <div css={[PostFeed]}>
               {props.data.allMarkdownRemark.edges.map(post => {
                 // filter out drafts in production
                 return (
-                  (post.node.frontmatter.draft !== true ||
-                    process.env.NODE_ENV !== 'production') && (
+                  (post.node.frontmatter.type === "project") && (
                     <PostCard key={post.node.fields.slug} post={post.node} />
                   )
                 );
               })}
             </div>
+
+            <div css={[PostFeed]}>
+              {props.data.allMarkdownRemark.edges.map(post => {
+                // filter out drafts in production
+                return (
+                  ( post.node.frontmatter.type === "post" && (
+                    post.node.frontmatter.draft !== true ||
+                    process.env.NODE_ENV !== 'production')) && (
+                    <PostCard key={post.node.fields.slug} post={post.node} />
+                  )
+                );
+              })}
+            </div>
+
           </div>
         </main>
         {props.children}
@@ -226,24 +211,6 @@ export const pageQuery = graphql`
         }
       }
     }
-    pokeflow: file(relativePath: { eq: "img/projects/pokeflow.png" }) {
-      childImageSharp {
-        # Specify the image processing specifications right in the query.
-        # Makes it trivial to update as your page's design changes.
-        fluid(maxWidth: 2000) {
-          ...GatsbyImageSharpFluid
-        }
-      }
-    }
-    swissiwashi: file(relativePath: { eq: "img/projects/swissiwashi.png" }) {
-      childImageSharp {
-        # Specify the image processing specifications right in the query.
-        # Makes it trivial to update as your page's design changes.
-        fluid(maxWidth: 2000) {
-          ...GatsbyImageSharpFluid
-        }
-      }
-    }
     allMarkdownRemark(
       sort: { fields: [frontmatter___date], order: DESC },
       filter: { frontmatter: { draft: { ne: true } } },
@@ -254,6 +221,7 @@ export const pageQuery = graphql`
         node {
           timeToRead
           frontmatter {
+            type
             title
             date
             tags

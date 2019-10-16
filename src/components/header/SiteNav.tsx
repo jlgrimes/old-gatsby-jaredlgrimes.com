@@ -129,7 +129,7 @@ class SiteNav extends React.Component<SiteNavProps> {
   render() {
     const { isHome = false } = this.props;
     return (
-      <nav css={[isHome && HomeNavRaise, SiteNavStyles]}>
+      <nav css={[isHome, SiteNavStyles]}>
         <SiteNavCenter>
           <SocialLinks>
             {config.facebook && (

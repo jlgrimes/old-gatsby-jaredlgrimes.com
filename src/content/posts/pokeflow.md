@@ -1,8 +1,9 @@
 ---
+type: "post"
 title: "A Journey into Tournament Data Manipulation"
 author: Ghost
 tags: ["pokemon"]
-image: img/pokeflow/thumb.png
+image: ../img/pokeflow/thumb.png
 date: "2019-05-23T10:00:00.000Z"
 draft: false
 ---

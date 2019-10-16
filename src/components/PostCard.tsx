@@ -102,10 +102,9 @@ export interface PostCardProps {
   post: any;
 }
 
-const PostCard: React.FC<PostCardProps> = ({ post }) => {
+const PostCardPost: React.FC<PostCardProps> = ({ post }) => {
   return (
-    "frontmatter" in post ? 
-      <article
+    <article
       className={`post-card ${post.frontmatter.image ? '' : 'no-image'}`}
       css={PostCardStyles}
     >
@@ -139,37 +138,49 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
         </PostCardMeta>
       </PostCardContent>
     </article> 
+  )
+}
 
-    :
-
+const PostCardProject: React.FC<PostCardProps> = ({ post }) => {
+  return (
     <article
-      className={`post-card`}
+      className={`post-card ${post.frontmatter.image ? '' : 'no-image'}`}
       css={PostCardStyles}
     >
-
-      <PostCardImage className="post-card-image">
-        <Img
-            alt={`${post.name} cover image`}
-            style={{ height: '100%' }}
-            fluid={post.image}
-          />
-      </PostCardImage>
-
+      {post.frontmatter.image && (
+        <Link className="post-card-image-link" css={PostCardImageLink} to={post.fields.slug}>
+          <PostCardImage className="post-card-image">
+            {post.frontmatter.image &&
+              post.frontmatter.image.childImageSharp &&
+              post.frontmatter.image.childImageSharp.fluid && (
+              <Img
+                alt={`${post.frontmatter.title} cover image`}
+                style={{ height: '100%' }}
+                fluid={post.frontmatter.image.childImageSharp.fluid}
+              />
+            )}
+          </PostCardImage>
+        </Link>
+      )}
       <PostCardContent className="post-card-content">
-        <header className="post-card-header">
-          <PostCardTitle>{post.name}</PostCardTitle>
-        </header>
-        <PostCardExcerpt>
-          <p>{post.description}</p>
-        </PostCardExcerpt>
-
-        <PostCardMeta className="post-card-meta">
-          <ReadingTime>{post.languages}</ReadingTime>
-        </PostCardMeta>
+        <Link className="post-card-content-link" css={PostCardContentLink} to={post.fields.slug}>
+          <header className="post-card-header">
+            {post.frontmatter.tags && <PostCardTags>{post.frontmatter.tags[0]}</PostCardTags>}
+            <PostCardTitle>{post.frontmatter.title}</PostCardTitle>
+          </header>
+          <PostCardExcerpt>
+            <p>{post.excerpt}</p>
+          </PostCardExcerpt>
+        </Link>
       </PostCardContent>
     </article> 
-
   );
+}
+
+const PostCard: React.FC<PostCardProps> = ({ post }) => {
+  return (
+    (post.frontmatter.type) === "post" ? PostCardPost({post}) : PostCardProject({post})
+    );
 };
 
 export default PostCard;
