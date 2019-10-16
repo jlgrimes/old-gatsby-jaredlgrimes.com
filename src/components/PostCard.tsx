@@ -99,12 +99,13 @@ const ReadingTime = styled.span`
 `;
 
 export interface PostCardProps {
-  post: PageContext;
+  post: any;
 }
 
 const PostCard: React.FC<PostCardProps> = ({ post }) => {
   return (
-    <article
+    "frontmatter" in post ? 
+      <article
       className={`post-card ${post.frontmatter.image ? '' : 'no-image'}`}
       css={PostCardStyles}
     >
@@ -137,7 +138,37 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
           <ReadingTime>{post.timeToRead} min read</ReadingTime>
         </PostCardMeta>
       </PostCardContent>
-    </article>
+    </article> 
+
+    :
+
+    <article
+      className={`post-card`}
+      css={PostCardStyles}
+    >
+
+      <PostCardImage className="post-card-image">
+        <Img
+            alt={`${post.name} cover image`}
+            style={{ height: '100%' }}
+            fluid={post.image}
+          />
+      </PostCardImage>
+
+      <PostCardContent className="post-card-content">
+        <header className="post-card-header">
+          <PostCardTitle>{post.name}</PostCardTitle>
+        </header>
+        <PostCardExcerpt>
+          <p>{post.description}</p>
+        </PostCardExcerpt>
+
+        <PostCardMeta className="post-card-meta">
+          <ReadingTime>{post.languages}</ReadingTime>
+        </PostCardMeta>
+      </PostCardContent>
+    </article> 
+
   );
 };
 

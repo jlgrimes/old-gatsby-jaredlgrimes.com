@@ -14,6 +14,9 @@ import Pagination from '../components/Pagination';
 import Typist from 'react-typist';
 import '../styles/Typist.css';
 
+import pokeflow from '../content/img/projects/pokeflow.png'
+import swissiwashi from '../content/img/projects/swissiwashi.png'
+
 import {
   inner,
   outer,
@@ -85,6 +88,16 @@ export interface IndexProps {
         fluid: any;
       };
     };
+    pokeflow: {
+      childImageSharp: {
+        fluid: any;
+      };
+    };
+    swissiwashi: {
+      childImageSharp: {
+        fluid: any;
+      };
+    };
     allMarkdownRemark: {
       edges: Array<{
         node: PageContext;
@@ -93,14 +106,25 @@ export interface IndexProps {
   };
 }
 
-const projects = [
-  "Swissiwashi",
-  "Pokeflow"
-]
-
 const IndexPage: React.FC<IndexProps> = props => {
   const width = props.data.header.childImageSharp.fluid.sizes.split(', ')[1].split('px')[0];
   const height = String(Number(width) / props.data.header.childImageSharp.fluid.aspectRatio);
+
+  const projects = [
+    {
+      "name": "Pokeflow",
+      "description": "uh",
+      "languages": "React, idk",
+      "image": props.data.pokeflow.childImageSharp.fluid
+    },
+    {
+      "name": "Swissiwashi",
+      "description": "uh",
+      "languages": "React, idk",
+      "image": props.data.swissiwashi.childImageSharp.fluid
+    }
+  ]
+
   return (
     <IndexLayout css={HomePosts}>
       <Helmet>
@@ -155,7 +179,9 @@ const IndexPage: React.FC<IndexProps> = props => {
           </div>
         </header>
         <main id="site-main" css={[SiteMain, outer]}>
-          {projects.map(project => <p>{project}</p>)}
+          {projects.map(project => 
+            <PostCard post={project} />
+          )}
           <div css={inner}>
             <div css={[PostFeed]}>
               {props.data.allMarkdownRemark.edges.map(post => {
@@ -192,6 +218,24 @@ export const pageQuery = graphql`
       }
     }
     header: file(relativePath: { eq: "img/blog-cover.jpg" }) {
+      childImageSharp {
+        # Specify the image processing specifications right in the query.
+        # Makes it trivial to update as your page's design changes.
+        fluid(maxWidth: 2000) {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+    pokeflow: file(relativePath: { eq: "img/projects/pokeflow.png" }) {
+      childImageSharp {
+        # Specify the image processing specifications right in the query.
+        # Makes it trivial to update as your page's design changes.
+        fluid(maxWidth: 2000) {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+    swissiwashi: file(relativePath: { eq: "img/projects/swissiwashi.png" }) {
       childImageSharp {
         # Specify the image processing specifications right in the query.
         # Makes it trivial to update as your page's design changes.

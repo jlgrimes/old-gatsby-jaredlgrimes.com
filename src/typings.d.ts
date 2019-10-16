@@ -25,3 +25,8 @@ declare module 'rehype-react' {
   }
   export default RehypeReact;
 }
+
+declare module "*.png" {
+  const value: any;
+  export default value;
+}
