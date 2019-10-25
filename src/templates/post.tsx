@@ -7,7 +7,6 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/core';
 import { Helmet } from 'react-helmet';
 
-import AuthorCard from '../components/AuthorCard';
 import Footer from '../components/Footer';
 import SiteNavLogo from '../components/header/SiteNavLogo';
 import PostCard from '../components/PostCard';
@@ -141,17 +140,6 @@ interface PageTemplateProps {
           };
         };
         tags: string[];
-        author: {
-          id: string;
-          bio: string;
-          avatar: {
-            children: Array<{
-              fixed: {
-                src: string;
-              };
-            }>;
-          };
-        };
       };
     };
     relatedPosts: {
@@ -191,17 +179,6 @@ export interface PageContext {
     date: string;
     draft?: boolean;
     tags: string[];
-    author: {
-      id: string;
-      bio: string;
-      avatar: {
-        children: Array<{
-          fixed: {
-            src: string;
-          };
-        }>;
-      };
-    };
   };
 }
 
@@ -237,7 +214,6 @@ const PageTemplate: React.FC<PageTemplateProps> = props => {
         )}
 
         {config.facebook && <meta property="article:publisher" content={config.facebook} />}
-        {config.facebook && <meta property="article:author" content={config.facebook} />}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={post.frontmatter.title} />
         <meta name="twitter:description" content={post.excerpt} />
@@ -246,7 +222,6 @@ const PageTemplate: React.FC<PageTemplateProps> = props => {
           <meta name="twitter:image" content={`${config.siteUrl}${post.frontmatter.image.childImageSharp.fluid.src}`} />
         )}
         <meta name="twitter:label1" content="Written by" />
-        <meta name="twitter:data1" content={post.frontmatter.author.id} />
         <meta name="twitter:label2" content="Filed under" />
         {post.frontmatter.tags && <meta name="twitter:data2" content={post.frontmatter.tags[0]} />}
         {config.twitter && <meta name="twitter:site" content={`@${config.twitter.split('https://twitter.com/')[1]}`} />}
@@ -294,11 +269,6 @@ const PageTemplate: React.FC<PageTemplateProps> = props => {
                 </PostFullImage>
               )}
               <PostContent htmlAst={post.htmlAst} />
-
-              <PostFullFooter>
-                <AuthorCard author={post.frontmatter.author} />
-                <PostFullFooterRight authorId={post.frontmatter.author.id} />
-              </PostFullFooter>
             </article>
           </div>
         </main>
@@ -347,19 +317,6 @@ export const query = graphql`
           childImageSharp {
             fluid(maxWidth: 3720) {
               ...GatsbyImageSharpFluid
-            }
-          }
-        }
-        author {
-          id
-          bio
-          avatar {
-            children {
-              ... on ImageSharp {
-                fixed(quality: 90) {
-                  ...GatsbyImageSharpFixed
-                }
-              }
             }
           }
         }

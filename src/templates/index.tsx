@@ -10,12 +10,10 @@ import Wrapper from '../components/Wrapper';
 import IndexLayout from '../layouts';
 import config from '../website-config';
 import Pagination from '../components/Pagination';
+import ExperienceCard from '../components/ExperienceCard';
 
 import Typist from 'react-typist';
 import '../styles/Typist.css';
-
-import pokeflow from '../content/img/projects/pokeflow.png'
-import swissiwashi from '../content/img/projects/swissiwashi.png'
 
 import {
   inner,
@@ -162,29 +160,40 @@ const IndexPage: React.FC<IndexProps> = props => {
         <main id="site-main" css={[SiteMain, outer]}>
           <div css={inner}>
 
-          <div css={[PostFeed]}>
-              {props.data.allMarkdownRemark.edges.map(post => {
-                // filter out drafts in production
-                return (
-                  (post.node.frontmatter.type === "project") && (
-                    <PostCard key={post.node.fields.slug} post={post.node} />
-                  )
-                );
-              })}
+            <div>
+            {props.data.allMarkdownRemark.edges.map(md => {
+                  // filter out drafts in production
+                  return (
+                    (md.node.frontmatter.type === "resume") && (
+                      <ExperienceCard node={md.node} />
+                    )
+                  );
+                })}
             </div>
 
             <div css={[PostFeed]}>
-              {props.data.allMarkdownRemark.edges.map(post => {
-                // filter out drafts in production
-                return (
-                  ( post.node.frontmatter.type === "post" && (
-                    post.node.frontmatter.draft !== true ||
-                    process.env.NODE_ENV !== 'production')) && (
-                    <PostCard key={post.node.fields.slug} post={post.node} />
-                  )
-                );
-              })}
-            </div>
+                {props.data.allMarkdownRemark.edges.map(post => {
+                  // filter out drafts in production
+                  return (
+                    (post.node.frontmatter.type === "project") && (
+                      <PostCard key={post.node.fields.slug} post={post.node} />
+                    )
+                  );
+                })}
+              </div>
+
+              <div css={[PostFeed]}>
+                {props.data.allMarkdownRemark.edges.map(post => {
+                  // filter out drafts in production
+                  return (
+                    ( post.node.frontmatter.type === "post" && (
+                      post.node.frontmatter.draft !== true ||
+                      process.env.NODE_ENV !== 'production')) && (
+                      <PostCard key={post.node.fields.slug} post={post.node} />
+                    )
+                  );
+                })}
+              </div>
 
           </div>
         </main>
@@ -241,19 +250,6 @@ export const pageQuery = graphql`
               }
             }
             url
-            author {
-              id
-              bio
-              avatar {
-                children {
-                  ... on ImageSharp {
-                    fixed(quality: 90) {
-                      src
-                    }
-                  }
-                }
-              }
-            }
           }
           excerpt
           fields {

@@ -4,7 +4,6 @@ title: "Chord Generator"
 tags: ["javascript"]
 image: ../img/projects/chord_generator.png
 url: "https://comp0cker.github.io/chord-generator/"
-author: Ghost
 ---
 
 Tool for introductory music theory practice
