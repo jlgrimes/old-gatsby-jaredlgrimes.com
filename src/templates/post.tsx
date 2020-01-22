@@ -273,7 +273,7 @@ const PageTemplate: React.FC<PageTemplateProps> = props => {
           </div>
         </main>
 
-        {/* Links to Previous/Next posts */}
+        {/* Links to Previous/Next posts 
         <aside className="read-next" css={outer}>
           <div css={inner}>
             <ReadNextFeed>
@@ -286,6 +286,7 @@ const PageTemplate: React.FC<PageTemplateProps> = props => {
             </ReadNextFeed>
           </div>
         </aside>
+              */}
         <Footer />
       </Wrapper>
     </IndexLayout>

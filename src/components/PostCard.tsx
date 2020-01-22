@@ -29,7 +29,6 @@ const PostCardStyles = css`
   }
 `;
 
-
 const ProjectCardStyles = css`
   display: flex;
   flex-direction: column;
@@ -165,25 +164,25 @@ const PostCardProject: React.FC<PostCardProps> = ({ post }) => {
       className={`project-card ${post.frontmatter.image ? '' : 'no-image'}`}
       css={ProjectCardStyles}
     >
-        <PostCardImage className="post-card-image">
-          {post.frontmatter.image &&
-            post.frontmatter.image.childImageSharp &&
-            post.frontmatter.image.childImageSharp.fluid && (
-            <Img
-              alt={`${post.frontmatter.title} cover image`}
-              style={{ height: '100%' }}
-              fluid={post.frontmatter.image.childImageSharp.fluid}
-            />
-          )}
-        </PostCardImage>
-        <a className="overlay" target="_blank" href={post.frontmatter.url}>
-          <div className="overlay-text">
-            <PostCardTitle>{post.frontmatter.title}</PostCardTitle>
-            <PostCardExcerpt>{post.excerpt}</PostCardExcerpt>
-            <br />
-            {post.frontmatter.tags && <PostCardTags>{post.frontmatter.tags[0]}</PostCardTags>}
-          </div>
-        </a>
+      <PostCardImage className="post-card-image">
+        {post.frontmatter.image &&
+          post.frontmatter.image.childImageSharp &&
+          post.frontmatter.image.childImageSharp.fluid && (
+          <Img
+            alt={`${post.frontmatter.title} cover image`}
+            style={{ height: '100%' }}
+            fluid={post.frontmatter.image.childImageSharp.fluid}
+          />
+        )}
+      </PostCardImage>
+      <a className="overlay" target="_blank" href={post.frontmatter.url}>
+        <div className="overlay-text">
+          <PostCardTitle>{post.frontmatter.title}</PostCardTitle>
+          <PostCardExcerpt>{post.excerpt}</PostCardExcerpt>
+          <br />
+          {post.frontmatter.tags && <PostCardTags>{post.frontmatter.tags[0]}</PostCardTags>}
+        </div>
+      </a>
       {/*
       <PostCardContent className="post-card-content">
         <Link className="post-card-content-link" css={PostCardContentLink} to={post.fields.slug}>
@@ -197,14 +196,14 @@ const PostCardProject: React.FC<PostCardProps> = ({ post }) => {
         </Link>
       </PostCardContent>
       */}
-    </article> 
+    </article>
   );
 }
 
 const PostCard: React.FC<PostCardProps> = ({ post }) => {
   return (
     (post.frontmatter.type) === "post" ? PostCardPost({post}) : PostCardProject({post})
-    );
+  );
 };
 
 export default PostCard;

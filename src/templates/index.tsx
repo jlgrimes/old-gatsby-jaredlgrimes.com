@@ -34,6 +34,11 @@ const HomePosts = css`
   flex: 1 1 auto;
 }
 
+.experience-card {
+  position: relative;
+  flex: 1 1 auto;
+}
+
   @media (min-width: 795px) {
 
     .post-card:nth-of-type(6n + 1):not(.no-image) {
@@ -160,45 +165,41 @@ const IndexPage: React.FC<IndexProps> = props => {
         <main id="site-main" css={[SiteMain, outer]}>
           <div css={inner}>
 
+            <div css={[PostFeed]}>
+              {props.data.allMarkdownRemark.edges.map(post => {
+                // filter out drafts in production
+                return (
+                  (post.node.frontmatter.type === 'project') && (
+                    <PostCard key={post.node.fields.slug} post={post.node} />
+                  )
+                );
+              })}
+            </div>
+
             <div>
-            {props.data.allMarkdownRemark.edges.map(md => {
-                  // filter out drafts in production
-                  return (
-                    (md.node.frontmatter.type === "resume") && (
-                      <ExperienceCard node={md.node} />
-                    )
-                  );
-                })}
+              {props.data.allMarkdownRemark.edges.map(md => {
+                // filter out drafts in production
+                return (
+                  (md.node.frontmatter.type === "resume") && (
+                    <ExperienceCard node={md.node} />
+                  )
+                );
+              })}
             </div>
 
             <div css={[PostFeed]}>
-                {props.data.allMarkdownRemark.edges.map(post => {
-                  // filter out drafts in production
-                  return (
-                    (post.node.frontmatter.type === "project") && (
-                      <PostCard key={post.node.fields.slug} post={post.node} />
-                    )
-                  );
-                })}
-              </div>
-
-              <div css={[PostFeed]}>
-                {props.data.allMarkdownRemark.edges.map(post => {
-                  // filter out drafts in production
-                  return (
-                    ( post.node.frontmatter.type === "post" && (
-                      post.node.frontmatter.draft !== true ||
-                      process.env.NODE_ENV !== 'production')) && (
-                      <PostCard key={post.node.fields.slug} post={post.node} />
-                    )
-                  );
-                })}
-              </div>
-
+              {props.data.allMarkdownRemark.edges.map(post => {
+                // filter out drafts in production
+                return (
+                  (post.node.frontmatter.type === 'post' && (
+                    <PostCard key={post.node.fields.slug} post={post.node} />
+                  ))
+                );
+              })}
+            </div>
           </div>
         </main>
         {props.children}
-        <Pagination currentPage={props.pageContext.currentPage} numPages={props.pageContext.numPages} />
         <Footer />
       </Wrapper>
     </IndexLayout>
@@ -239,6 +240,7 @@ export const pageQuery = graphql`
           frontmatter {
             type
             title
+            subtitle
             date
             tags
             draft

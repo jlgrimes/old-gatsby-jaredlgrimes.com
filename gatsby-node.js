@@ -59,6 +59,7 @@ exports.createPages = async ({ graphql, actions }) => {
             frontmatter {
               type
               title
+              subtitle
               tags
               date
               draft
@@ -101,7 +102,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const posts = result.data.allMarkdownRemark.edges;
 
   // Create paginated index
-  const postsPerPage = 6;
+  const postsPerPage = 1000; // uncap pages
   const numPages = Math.ceil(posts.length / postsPerPage);
 
   Array.from({ length: numPages }).forEach((_, i) => {
