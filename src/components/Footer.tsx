@@ -7,6 +7,7 @@ import { css } from '@emotion/core';
 import { colors } from '../styles/colors';
 import { outer, inner } from '../styles/shared';
 import config from '../website-config';
+import SiteNav from '../components/header/SiteNav';
 
 const SiteFooter = css`
   position: relative;
@@ -77,19 +78,7 @@ const Footer: React.FC = () => {
             </a>
           )}
         </section>
-        <SiteFooterNav>
-          <Link to="/">Latest Posts</Link>
-          {config.facebook && (
-            <a href={config.facebook} target="_blank" rel="noopener noreferrer">
-              Facebook
-            </a>
-          )}
-          {config.twitter && (
-            <a href={config.twitter} target="_blank" rel="noopener noreferrer">
-              Twitter
-            </a>
-          )}
-        </SiteFooterNav>
+        <SiteNav isHome />
       </div>
     </footer>
   );

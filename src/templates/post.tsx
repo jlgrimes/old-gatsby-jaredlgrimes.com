@@ -17,7 +17,7 @@ import ReadNextCard from '../components/ReadNextCard';
 import Wrapper from '../components/Wrapper';
 import IndexLayout from '../layouts';
 import { colors } from '../styles/colors';
-import { inner, outer, SiteHeader, SiteMain } from '../styles/shared';
+import { inner, outer, SiteHeaderPost, SiteMain } from '../styles/shared';
 import config from '../website-config';
 
 const PostTemplate = css`
@@ -233,7 +233,7 @@ const PageTemplate: React.FC<PageTemplateProps> = props => {
         {height && <meta property="og:image:height" content={height} />}
       </Helmet>
       <Wrapper css={PostTemplate}>
-        <header css={[outer, SiteHeader]}>
+        <header css={[outer, SiteHeaderPost]}>
           <div css={inner}>
             <SiteNavLogo />
           </div>

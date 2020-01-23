@@ -9,6 +9,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Zoom from 'react-reveal/Zoom';
 import { css } from '@emotion/core';
 import React from 'react';
+import RehypeReact from 'rehype-react';
 
 const CardContentStyles = css`
   display: 'inline-block';
@@ -42,28 +43,38 @@ const theme = createMuiTheme({
   },
 });
 
+const renderAst = new RehypeReact({
+  createElement: React.createElement,
+  // components: { 'interactive-counter': Counter },
+  components: {},
+}).Compiler;
+
+const Ast = ({ ast, ...props }: any) => {
+  ast.properties = props;
+  return renderAst(ast);
+};
+
 const ExperienceCard: React.FC<ExperienceCardProps> = ({ node }) => {
   return (
     <div
       css={ExperienceCardStyles}
     >
-      <Zoom>
-        <Paper css={CardContentStyles} elevation={0}>
-            <ThemeProvider theme={theme}>
-            <div style={{padding: "20px"}}>
-              {node.frontmatter.image &&
-                <Img
-                  alt={`${node.frontmatter.title} cover image`}
-                  style={{ width: '4em' }}
-                  fluid={node.frontmatter.image.childImageSharp.fluid}
-                />}
-              <Typography variant="h1">{node.frontmatter.title}</Typography>
-              <Typography variant="subtitle1">{node.frontmatter.subtitle}</Typography>
-              <Typography variant="body1">{node.excerpt}</Typography>
-              </div>
-            </ThemeProvider>
-        </Paper>
-      </Zoom>
+      <Paper css={CardContentStyles} elevation={0}>
+        <ThemeProvider theme={theme}>
+          <div style={{padding: "20px"}}>
+            {node.frontmatter.image &&
+              <Img
+                alt={`${node.frontmatter.title} cover image`}
+                style={{ width: '4em' }}
+                fluid={node.frontmatter.image.childImageSharp.fluid}
+              />}
+            <Typography variant="h1">{node.frontmatter.title}</Typography>
+            <Typography variant="subtitle1">{node.frontmatter.subtitle}</Typography>
+            <Typography variant="subtitle1">{node.frontmatter.date}</Typography>
+            <Ast ast={node.htmlAst} />
+          </div>
+        </ThemeProvider>
+      </Paper>
     </div>
   );
 };

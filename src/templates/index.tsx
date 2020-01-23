@@ -15,6 +15,9 @@ import ExperienceCard from '../components/ExperienceCard';
 import Typist from 'react-typist';
 import '../styles/Typist.css';
 
+import 'animate.css/animate.min.css';
+import ScrollAnimation from 'react-animate-on-scroll';
+
 import {
   inner,
   outer,
@@ -150,42 +153,43 @@ const IndexPage: React.FC<IndexProps> = props => {
             backgroundImage: `url('${props.data.header.childImageSharp.fluid.src}')`,
           }}
         >
-          <div css={inner}>
-            <SiteHeaderContent style={{height: "20em"}}>
-                <Typist className="code">
-                  <SiteTitle>{"Hi, I'm Jared."}</SiteTitle>
-                <Typist.Delay ms={500} />
-                  <br />
-                  <SiteDescription>{config.description}</SiteDescription>
-                </Typist>
-            </SiteHeaderContent>
-            <SiteNav isHome />
-          </div>
+          <SiteHeaderContent style={{height: "20em"}}>
+            <Typist className="code">
+              <SiteTitle>{"Hi, I'm Jared."}</SiteTitle>
+              <Typist.Delay ms={500} /> 
+              <br />
+              <SiteDescription>{config.description}</SiteDescription>
+            </Typist>
+          </SiteHeaderContent>
         </header>
         <main id="site-main" css={[SiteMain, outer]}>
           <div css={inner}>
 
-            <div css={[PostFeed]}>
-              {props.data.allMarkdownRemark.edges.map(post => {
-                // filter out drafts in production
-                return (
-                  (post.node.frontmatter.type === 'project') && (
-                    <PostCard key={post.node.fields.slug} post={post.node} />
-                  )
-                );
-              })}
-            </div>
+            <ScrollAnimation animateIn="fadeIn">
+              <div css={[PostFeed]}>
+                {props.data.allMarkdownRemark.edges.map(post => {
+                  // filter out drafts in production
+                  return (
+                    (post.node.frontmatter.type === 'project') && (
+                      <PostCard key={post.node.fields.slug} post={post.node} />
+                    )
+                  );
+                })}
+              </div>
+            </ScrollAnimation>
 
-            <div>
-              {props.data.allMarkdownRemark.edges.map(md => {
-                // filter out drafts in production
-                return (
-                  (md.node.frontmatter.type === "resume") && (
-                    <ExperienceCard node={md.node} />
-                  )
-                );
-              })}
-            </div>
+            <ScrollAnimation animateIn="fadeIn">
+              <div>
+                {props.data.allMarkdownRemark.edges.map(md => {
+                  // filter out drafts in production
+                  return (
+                    (md.node.frontmatter.type === "resume") && (
+                      <ExperienceCard node={md.node} />
+                    )
+                  );
+                })}
+              </div>
+            </ScrollAnimation>
 
             <div css={[PostFeed]}>
               {props.data.allMarkdownRemark.edges.map(post => {
@@ -219,7 +223,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    header: file(relativePath: { eq: "img/blog-cover.jpg" }) {
+    header: file(relativePath: { eq: "img/banner.jpg" }) {
       childImageSharp {
         # Specify the image processing specifications right in the query.
         # Makes it trivial to update as your page's design changes.
@@ -253,6 +257,8 @@ export const pageQuery = graphql`
             }
             url
           }
+          html
+          htmlAst
           excerpt
           fields {
             layout

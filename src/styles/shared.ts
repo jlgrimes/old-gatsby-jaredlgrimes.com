@@ -12,7 +12,6 @@ export const outer = css`
 export const inner = css`
   margin: 0 auto;
   max-width: 1040px;
-  width: 100%;
 `;
 
 export const SiteMain = css`
@@ -24,7 +23,7 @@ export const SiteTitle = styled.h1`
   z-index: 10;
   margin: 0;
   padding: 0;
-  font-size: 6rem;
+  font-size: 8rem;
   font-weight: 700;
   display: inline-block
 `;
@@ -74,6 +73,16 @@ export const SocialLink = css`
   }
 `;
 
+export const SiteHeaderPost = css`
+  position: relative;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  color: #fff;
+  /* background: color(var(--darkgrey) l(-5%)) no-repeat center center; */
+  background: ${darken('0.05', colors.darkgrey)} no-repeat center center;
+  background-size: cover;
+  `
+
 export const SiteHeader = css`
   position: relative;
   padding-top: 12px;
@@ -82,17 +91,40 @@ export const SiteHeader = css`
   /* background: color(var(--darkgrey) l(-5%)) no-repeat center center; */
   background: ${darken('0.05', colors.darkgrey)} no-repeat center center;
   background-size: cover;
+  height: 100rem;
 `;
 
 export const SiteHeaderContent = styled.div`
+  @media screen and (min-width: 992px) {
+    float: right;
+    align-items: right;
+    justify-content: right;
+    text-align: right;
+    padding-top: 60rem;
+  }
+  
+  /* On screens that are 992px or less, set the background color to blue */
+  @media screen and (max-width: 992px) {
+    float: center;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10vw 4vw;
+  }
+  
+  /* On screens that are 600px or less, set the background color to olive */
+  @media screen and (max-width: 600px) {
+    float: center;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10vw 4vw;
+  }
+
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 10vw 4vw;
   min-height: 200px;
   max-height: 450px;
-  text-align: center;
 `;
 
 export const SiteHeaderStyles = css`
