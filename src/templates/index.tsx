@@ -2,6 +2,7 @@ import { graphql } from 'gatsby';
 import * as React from 'react';
 import { css } from '@emotion/core';
 import Helmet from 'react-helmet';
+import Img from 'gatsby-image';
 
 import Footer from '../components/Footer';
 import SiteNav from '../components/header/SiteNav';
@@ -18,6 +19,13 @@ import '../styles/Typist.css';
 import 'animate.css/animate.min.css';
 import ScrollAnimation from 'react-animate-on-scroll';
 
+import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timeline-component';
+import 'react-vertical-timeline-component/style.min.css';
+
+import styled from '@emotion/styled';
+
+import RehypeReact from 'rehype-react';
+
 import {
   inner,
   outer,
@@ -30,6 +38,7 @@ import {
   SiteTitle,
 } from '../styles/shared';
 import { PageContext } from './post';
+import { Typography } from '@material-ui/core';
 
 const HomePosts = css`
 .project-card {
@@ -108,6 +117,61 @@ export interface IndexProps {
   };
 }
 
+const ResumeP = styled.p`
+  font-size: 1em !important;
+`;
+
+const renderAst = new RehypeReact({
+  createElement: React.createElement,
+  components: {
+    p: ResumeP,
+  },
+}).Compiler;
+
+const Ast = ({ ast, ...props }: any) => {
+  ast.properties = props;
+  return renderAst(ast);
+};
+
+const ProjectBlock = styled.div`
+  background-color: #c97474;
+  width: 100%;
+  padding-top: 40px;
+  padding-bottom: 80px;
+`;
+
+const ResumeBlock = styled.div`
+  background-color: #5474af;
+  width: 100%;
+  padding-top: 40px;
+  padding-bottom: 80px;
+`;
+
+const BlogBlock = styled.div`
+  background-color: #36aa9d;
+  width: 100%;
+  padding-top: 40px;
+  padding-bottom: 80px;
+`;
+
+const ProjectBlockHeader = styled.h1`
+  justify-self: center;
+  color: #eceff1;
+  padding-bottom: 20px
+`;
+
+const ResumeBlockHeader = styled.h1`
+  justify-self: center;
+  color: #eceff1;
+  padding-bottom: 20px
+`;
+
+const BlogBlockHeader = styled.h1`
+  justify-self: center;
+  color: #eceff1;
+  padding-bottom: 20px
+`;
+
 const IndexPage: React.FC<IndexProps> = props => {
   const width = props.data.header.childImageSharp.fluid.sizes.split(', ')[1].split('px')[0];
   const height = String(Number(width) / props.data.header.childImageSharp.fluid.aspectRatio);
@@ -162,46 +226,84 @@ const IndexPage: React.FC<IndexProps> = props => {
             </Typist>
           </SiteHeaderContent>
         </header>
-        <main id="site-main" css={[SiteMain, outer]}>
-          <div css={inner}>
+        <main id="site-main">
+            <ProjectBlock>
+              <div css={inner}>
+                <ScrollAnimation animateOnce animateIn="fadeIn" style={{display: 'grid'}}>
+                  <ProjectBlockHeader>Projects</ProjectBlockHeader>
+                </ScrollAnimation>
 
-            <ScrollAnimation animateIn="fadeIn">
-              <div css={[PostFeed]}>
-                {props.data.allMarkdownRemark.edges.map(post => {
-                  // filter out drafts in production
+                <ScrollAnimation animateOnce animateIn="fadeIn">
+                  <div css={[PostFeed]}>
+                    {props.data.allMarkdownRemark.edges.map(post => {
+                      // filter out drafts in production
+                      return (
+                        (post.node.frontmatter.type === 'project') && (
+                          <PostCard key={post.node.fields.slug} post={post.node} />
+                        )
+                      );
+                    })}
+                  </div>
+                </ScrollAnimation>
+              </div>
+            </ProjectBlock>
+
+          <ResumeBlock>
+            <div css={inner}>
+              <ScrollAnimation animateOnce animateIn="fadeIn" style={{display: 'grid'}}>
+                <ResumeBlockHeader>Resume</ResumeBlockHeader>
+              </ScrollAnimation>
+              <VerticalTimeline>
+                {props.data.allMarkdownRemark.edges.map((md: any) => {
+                  const { htmlAst } = md.node;
+                  const { title, subtitle, date, tags, image } = md.node.frontmatter;
+
                   return (
-                    (post.node.frontmatter.type === 'project') && (
-                      <PostCard key={post.node.fields.slug} post={post.node} />
+                    (md.node.frontmatter.type === 'resume') && (
+                      <VerticalTimelineElement key={title}
+                        className={`vertical-timeline-element--${tags[0]}`}
+                        contentStyle={{ background: 'rgb(84, 116, 175, 0)', color: '#fff', boxShadow: 'none' }}
+                        contentArrowStyle={{ borderRight: '7px solid  #fff' }}
+                        date={date}
+                        dateClassName={'date'}
+                        iconStyle={{boxShadow: 'none'}}
+                        icon={image === null ? null : <Img
+                          alt={`${title} cover image`}
+                          style={{ width: '4em' }}
+                          fluid={image.childImageSharp.fluid}
+                        />}
+                      >
+                        <Typography variant="h3">{title}</Typography>
+                        <Typography variant="h5">{subtitle}</Typography>
+                        <Ast ast={htmlAst} />
+                      </VerticalTimelineElement>
                     )
                   );
-                })}
-              </div>
-            </ScrollAnimation>
-
-            <ScrollAnimation animateIn="fadeIn">
-              <div>
-                {props.data.allMarkdownRemark.edges.map(md => {
-                  // filter out drafts in production
-                  return (
-                    (md.node.frontmatter.type === "resume") && (
-                      <ExperienceCard node={md.node} />
-                    )
-                  );
-                })}
-              </div>
-            </ScrollAnimation>
-
-            <div css={[PostFeed]}>
-              {props.data.allMarkdownRemark.edges.map(post => {
-                // filter out drafts in production
-                return (
-                  (post.node.frontmatter.type === 'post' && (
-                    <PostCard key={post.node.fields.slug} post={post.node} />
-                  ))
-                );
-              })}
+                }
+                )}
+              </VerticalTimeline>
             </div>
-          </div>
+          </ResumeBlock>
+
+          <BlogBlock>
+            <div css={inner}>
+              <ScrollAnimation animateOnce animateIn="fadeIn" style={{display: 'grid'}}>
+                <BlogBlockHeader>Blog</BlogBlockHeader>
+              </ScrollAnimation>
+              <ScrollAnimation animateOnce animateIn="fadeIn">
+                <div css={[PostFeed]}>
+                  {props.data.allMarkdownRemark.edges.map(post => {
+                    // filter out drafts in production
+                    return (
+                      (post.node.frontmatter.type === 'post' && (
+                        <PostCard key={post.node.fields.slug} post={post.node} />
+                      ))
+                    );
+                  })}
+                </div>
+              </ScrollAnimation>
+            </div>
+          </BlogBlock>
         </main>
         {props.children}
         <Footer />

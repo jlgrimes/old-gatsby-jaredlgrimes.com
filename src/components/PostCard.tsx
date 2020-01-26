@@ -81,7 +81,6 @@ const PostCardContentLink = css`
 `;
 
 const PostCardTags = styled.span`
-  display: block;
   margin-bottom: 4px;
   color: ${colors.midgrey};
   font-size: 1.2rem;
@@ -180,7 +179,9 @@ const PostCardProject: React.FC<PostCardProps> = ({ post }) => {
           <PostCardTitle>{post.frontmatter.title}</PostCardTitle>
           <PostCardExcerpt>{post.excerpt}</PostCardExcerpt>
           <br />
-          {post.frontmatter.tags && <PostCardTags>{post.frontmatter.tags[0]}</PostCardTags>}
+          <div style={{whiteSpace: 'nowrap'}}>
+            {post.frontmatter.tags && <PostCardTags>{post.frontmatter.tags.join(", ")}</PostCardTags>}
+          </div>
         </div>
       </a>
       {/*

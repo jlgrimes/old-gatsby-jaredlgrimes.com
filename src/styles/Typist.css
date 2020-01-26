@@ -37,3 +37,7 @@
   transform: translate(-50%, -50%);
   text-align: center;
 }
+
+.vertical-timeline-element-date {
+  font-size: 1.5rem !important;
+}

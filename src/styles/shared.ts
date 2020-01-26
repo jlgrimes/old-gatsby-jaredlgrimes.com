@@ -44,7 +44,7 @@ export const PostFeed = css`
   display: flex;
   flex-wrap: wrap;
   margin: 0 -20px;
-  padding: 40px 0 0 0;
+  padding: 0 0 0 0;
 `;
 
 export const PostFeedRaise = css`
@@ -79,7 +79,7 @@ export const SiteHeaderPost = css`
   padding-bottom: 12px;
   color: #fff;
   /* background: color(var(--darkgrey) l(-5%)) no-repeat center center; */
-  background: ${darken('0.05', colors.darkgrey)} no-repeat center center;
+  background: #2b3e45 no-repeat center center;
   background-size: cover;
   `
 
@@ -89,7 +89,7 @@ export const SiteHeader = css`
   padding-bottom: 12px;
   color: #fff;
   /* background: color(var(--darkgrey) l(-5%)) no-repeat center center; */
-  background: ${darken('0.05', colors.darkgrey)} no-repeat center center;
+  background: #2b3e45 no-repeat center center;
   background-size: cover;
   height: 100rem;
 `;
