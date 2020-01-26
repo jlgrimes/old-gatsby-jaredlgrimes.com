@@ -426,13 +426,8 @@ const GlobalStyles = css`
 
   h1 {
     margin: 0 0 0.5em 0;
-    font-size: 5rem;
+    font-size: 3.5em;
     font-weight: 700;
-  }
-  @media (max-width: 500px) {
-    h1 {
-      font-size: 2.2rem;
-    }
   }
 
   h2 {
