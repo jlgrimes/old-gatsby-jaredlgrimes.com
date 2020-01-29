@@ -46,6 +46,12 @@ const HomePosts = css`
   flex: 1 1 auto;
 }
 
+@media (max-width: 1152px) {
+.vertical-timeline-element-content-arrow {
+    visibility: hidden;
+  }
+}
+
 .experience-card {
   position: relative;
   flex: 1 1 auto;
@@ -217,7 +223,7 @@ const IndexPage: React.FC<IndexProps> = props => {
             backgroundImage: `url('${props.data.header.childImageSharp.fluid.src}')`,
           }}
         >
-          <SiteHeaderContent style={{height: "20em"}}>
+          <SiteHeaderContent style={{ height: '20em' }}>
             <Typist className="code">
               <SiteTitle>{"Hi, I'm Jared."}</SiteTitle>
               <Typist.Delay ms={500} /> 
@@ -227,26 +233,26 @@ const IndexPage: React.FC<IndexProps> = props => {
           </SiteHeaderContent>
         </header>
         <main id="site-main">
-            <ProjectBlock>
-              <div css={inner}>
-                <ScrollAnimation animateOnce animateIn="fadeIn" style={{display: 'grid'}}>
-                  <ProjectBlockHeader>Projects</ProjectBlockHeader>
-                </ScrollAnimation>
+          <ProjectBlock>
+            <div css={inner}>
+              <ScrollAnimation animateOnce animateIn="fadeIn" style={{ display: 'grid' }}>
+                <ProjectBlockHeader>Projects</ProjectBlockHeader>
+              </ScrollAnimation>
 
-                <ScrollAnimation animateOnce animateIn="fadeIn">
-                  <div css={[PostFeed]}>
-                    {props.data.allMarkdownRemark.edges.map(post => {
-                      // filter out drafts in production
-                      return (
-                        (post.node.frontmatter.type === 'project') && (
-                          <PostCard key={post.node.fields.slug} post={post.node} />
-                        )
-                      );
-                    })}
-                  </div>
-                </ScrollAnimation>
-              </div>
-            </ProjectBlock>
+              <ScrollAnimation animateOnce animateIn="fadeIn">
+                <div css={[PostFeed]}>
+                  {props.data.allMarkdownRemark.edges.map(post => {
+                    // filter out drafts in production
+                    return (
+                      (post.node.frontmatter.type === 'project') && (
+                        <PostCard key={post.node.fields.slug} post={post.node} />
+                      )
+                    );
+                  })}
+                </div>
+              </ScrollAnimation>
+            </div>
+          </ProjectBlock>
 
           <ResumeBlock>
             <div css={inner}>

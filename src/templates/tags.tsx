@@ -1,6 +1,8 @@
 import { graphql } from 'gatsby';
 import React from 'react';
 
+import SiteNavLogo from '../components/header/SiteNavLogo';
+
 import Footer from '../components/Footer';
 import SiteNav from '../components/header/SiteNav';
 import PostCard from '../components/PostCard';
@@ -93,11 +95,16 @@ const Tags: React.FC<TagTemplateProps> = props => {
               tagData && tagData.node.image ?
                 `url('${tagData.node.image.childImageSharp.fluid.src}')` :
                 '',
+            height: '50rem',
           }}
         >
-          <div css={inner}>
-            <SiteNav isHome={false} />
-            <SiteHeaderContent>
+          <div css={inner} >
+            <header>
+              <div>
+                <SiteNavLogo />
+              </div>
+            </header>
+            <SiteHeaderContent style={{ paddingTop: '20rem' }}>
               <SiteTitle>{tag}</SiteTitle>
               <SiteDescription>
                 {tagData && tagData.node.description ? (
@@ -161,6 +168,7 @@ export const pageQuery = graphql`
             title
             tags
             date
+            type
             image {
               childImageSharp {
                 fluid(maxWidth: 1240) {
