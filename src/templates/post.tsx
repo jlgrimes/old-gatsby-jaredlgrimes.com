@@ -20,6 +20,8 @@ import { colors } from '../styles/colors';
 import { inner, outer, SiteHeaderPost, SiteMain } from '../styles/shared';
 import config from '../website-config';
 
+import ReactGA from 'react-ga';
+
 const PostTemplate = css`
   .site-main {
     background: #fff;
@@ -190,6 +192,8 @@ const PageTemplate: React.FC<PageTemplateProps> = props => {
     width = post.frontmatter.image.childImageSharp.fluid.sizes.split(', ')[1].split('px')[0];
     height = String(Number(width) / post.frontmatter.image.childImageSharp.fluid.aspectRatio);
   }
+
+  ReactGA.pageview('/posts/' + post.frontmatter.title);
 
   return (
     <IndexLayout className="post-template">
