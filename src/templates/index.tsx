@@ -42,7 +42,7 @@ import {
 import { PageContext } from './post';
 import { Typography } from '@material-ui/core';
 
-const trackingId = 'UA-158704534-1'; // Replace with your Google Analytics tracking ID
+const trackingId = 'UA-140780097-1'; // Replace with your Google Analytics tracking ID
 ReactGA.initialize(trackingId);
 ReactGA.set({
   userId: 123,
