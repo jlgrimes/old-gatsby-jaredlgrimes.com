@@ -26,6 +26,8 @@ import styled from '@emotion/styled';
 
 import RehypeReact from 'rehype-react';
 
+import ReactGA from 'react-ga';
+
 import {
   inner,
   outer,
@@ -39,6 +41,14 @@ import {
 } from '../styles/shared';
 import { PageContext } from './post';
 import { Typography } from '@material-ui/core';
+
+const trackingId = 'UA-158704534-1'; // Replace with your Google Analytics tracking ID
+ReactGA.initialize(trackingId);
+ReactGA.set({
+  userId: 123,
+  // any data that is relevant to the user session
+  // that you would like to track with google analytics
+});
 
 const HomePosts = css`
 .project-card {
